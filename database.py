@@ -1,12 +1,12 @@
 import sqlite3
-con = sqlite3.connect('test.db')
+con = sqlite3.connect('database.db')
 cur = con.cursor()
 
 
 def createConnection():
     global con
     global cur
-    con = sqlite3.connect('test.db')
+    con = sqlite3.connect('database.db')
     cur = con.cursor()
     
     
