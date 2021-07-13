@@ -77,7 +77,6 @@ async def excel(ctx):
 @client.command()
 async def database(ctx):
   await ctx.send(content="Database File:", file=discord.File(db_path))
+
+  
 client.run(token)
-
-
-

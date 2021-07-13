@@ -27,14 +27,8 @@ def logAdd(date, hours, total_hours):
         cur.execute('INSERT INTO logs VALUES (:date, :hours, :name, :totalHours)', {"date": date, "hours": hours, "name": 'Tree', "totalHours": total_hours})
 
 
-
-
 # cur.execute('''CREATE TABLE logs
 #                (date text, hours text, name text, totalHours text)''')
-# logAdd('test1', 'test2', '90')
 # print(logRetrive())
-
-# print(divmod(300, 300))
-
 con.commit()
 closeConnection()
