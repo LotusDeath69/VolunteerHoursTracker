@@ -53,7 +53,7 @@ async def add(ctx, *args):
   if ctx.author.id != 466042357553430539:
     await ctx.reply('You cannot use this bot! L')
     return
-
+  print(ctx.author.id)
   if len(args) > 2:
     await ctx.reply('Requires only `date, hours` input.')
   elif len(args) == 1:
