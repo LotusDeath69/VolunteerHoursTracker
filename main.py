@@ -1,5 +1,5 @@
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
 from dotenv import load_dotenv
 from discord.errors import DiscordException
 import os 
@@ -30,20 +30,10 @@ def addData(data):
   wb.save("volunteerHours.xlsx")
 
 
-def createEmbed(ign, title, value):
-    embed = discord.Embed(
-    title = title,
-    colour = discord.Colour.blue()
-  )
-    embed.add_field(name=ign, value=value)
-    embed.set_footer(text='Created by ThatBananaking')
-    return embed 
-
-
 @client.event
 async def on_ready():
   await client.change_presence(status=discord.Status.online, activity=discord.Activity(
-    type=discord.ActivityType.listening, name='change this to total hours'
+    type=discord.ActivityType.listening, name=f'{divmod(int(logRetrive()[::-1][0][3]), 60)[0]}/100 hours'
   ))
   print('logged in')
 
@@ -53,7 +43,6 @@ async def add(ctx, *args):
   if ctx.author.id != 466042357553430539:
     await ctx.reply('You cannot use this bot! L')
     return
-  print(ctx.author.id)
   if len(args) > 2:
     await ctx.reply('Requires only `date, hours` input.')
   elif len(args) == 1:
@@ -89,4 +78,6 @@ async def excel(ctx):
 async def database(ctx):
   await ctx.send(content="Database File:", file=discord.File(db_path))
 client.run(token)
+
+
 
