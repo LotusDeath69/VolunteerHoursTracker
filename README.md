@@ -1,0 +1,1 @@
+The purpose of this project is to keep track of my volunteer hours. 
