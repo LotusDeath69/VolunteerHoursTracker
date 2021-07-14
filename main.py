@@ -17,15 +17,30 @@ db_path = os.environ['DB_PATH']
 client = commands.Bot(command_prefix=prefix, help_command=None)
 
 
+def mintuesToHours(minutes):
+  hours = divmod(int(minutes), 60)
+  if hours[1] == 0:
+    return str(hours[0])
+  return str(hours[0]) + ':' + str(hours[1])
+
+
+async def updateStatus():
+  await client.change_presence(activity=discord.Activity(
+    type=discord.ActivityType.listening, name=f'{divmod(int(logRetrive()[::-1][0][3]), 60)[0]}/100 hours'
+  ))
+
+
 def addData(data):
   wb = Workbook()
   ws = wb.active
   ws['A1'] = 'Date'
-  ws['B1'] = 'Minutes'
-  ws['C1'] = 'Total Minutes'
+  ws['B1'] = 'Hours'
+  ws['C1'] = 'Total Hours'
   for i in data:
     row = list(i)
     del row[2]
+    row[1] = mintuesToHours(row[1])
+    row[2] = mintuesToHours(row[2])
     ws.append(row)
   wb.save("volunteerHours.xlsx")
 
@@ -61,6 +76,7 @@ async def add(ctx, *args):
       total_hours = time
     logAdd(args[0], str(time), str(total_hours))
     await ctx.reply(f'Congratulations! You now have {divmod(total_hours, 60)[0]}/100 hours.')
+    await updateStatus()
 
 
 @client.command()
